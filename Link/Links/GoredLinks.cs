@@ -25,8 +25,9 @@ namespace AlarmMod.Link.Links
         {
             if (player.TryGetModPlayer(out LinkPlayer lp))
             {
-                lp.linkRange = 10;
-                lp.linkRegen += 1;
+                lp.linkRange = 12;
+                lp.goredLinks = true;
+                lp.DrawLink(DustID.CrimsonPlants);
             }
         }
 
@@ -42,9 +43,9 @@ namespace AlarmMod.Link.Links
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup("Wood", 8)
-                .AddIngredient(ItemID.FallenStar, 3)
-                .AddTile(TileID.DemonAltar)
+                .AddIngredient(ItemID.CrimtaneBar, 12)
+                .AddIngredient(ItemID.TissueSample, 8)
+                .AddTile(TileID.Anvils)
                 .Register();
         }
     }

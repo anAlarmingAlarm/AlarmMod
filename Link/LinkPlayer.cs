@@ -1,11 +1,10 @@
 ﻿using AlarmMod.Buffs;
-using AlarmMod.Link.Armor.LivingWood;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
-using static System.Net.Mime.MediaTypeNames;
+using Terraria.WorldBuilding;
 
 namespace AlarmMod.Link
 {
@@ -72,14 +71,19 @@ namespace AlarmMod.Link
         public bool cosmicSet;
 
         ///<summary>
-        ///Afflicted Links effect (bonus defense when hit)
+        ///Afflicted Links effect (reduced damage with cooldown); -1 if disabled, 0 if active, above 0 if on cooldown
         ///</summary>
-        public bool afflictedLinks;
+        public int afflictedLinks;
 
         ///<summary>
         ///Gored Links effect (bonus damage when rapidly attacking)
         ///</summary>
         public bool goredLinks;
+
+        ///<summary>
+        ///Hits to track for the goredLinks effect
+        ///</summary>
+        public int[] goredLinksHits;
 
         ///<summary>
         ///Cufflinks effect (bonus armor penetration, but halved if the target has more than 0 already)
@@ -165,6 +169,16 @@ namespace AlarmMod.Link
                             Player.endurance += lp.linkEndurance;
                             Player.moveSpeed += lp.linkMoveSpeed;
                             Player.lifeRegen += lp.linkRegen * 2;
+
+                            // Cufflinks effect
+                            if (Player.GetArmorPenetration(DamageClass.Generic) > lp.linkArmorPen)
+                            {
+                                Player.GetArmorPenetration(DamageClass.Generic) += 5;
+                            }
+                            else
+                            {
+                                Player.GetArmorPenetration(DamageClass.Generic) += 10;
+                            }
                         }
                     }
                 }
@@ -198,10 +212,84 @@ namespace AlarmMod.Link
             }
             return base.Shoot(item, source, position, velocity, type, damage, knockback);
         }
+        
+        // Afflicted Links effects
+        private void AfflictedLinkModifier(ref Player.HurtModifiers modifiers)
+        {
+            if (afflictedLinks == 0)
+            {
+                modifiers.IncomingDamageMultiplier *= 0.85f;
+                afflictedLinks = 180;
+            }
+            else
+            {
+                foreach (Player p in Main.player)
+                {
+                    if (p.TryGetModPlayer(out LinkPlayer lp))
+                    {
+                        if (lp.target == Player && lp.afflictedLinks == 0)
+                        {
+                            modifiers.IncomingDamageMultiplier *= 0.85f;
+                            lp.afflictedLinks = 180;
+                        }
+                    }
+                }
+            }
+        }
+        public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
+        {
+            AfflictedLinkModifier(ref modifiers);
+            base.ModifyHitByNPC(npc, ref modifiers);
+        }
+        public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
+        {
+            AfflictedLinkModifier(ref modifiers);
+            base.ModifyHitByProjectile(proj, ref modifiers);
+        }
+
+        // Gored Links effects
+        public override void OnHitAnything(float x, float y, Entity victim)
+        {
+            if (goredLinks)
+            {
+                goredLinksHits[2] = goredLinksHits[1];
+                goredLinksHits[1] = goredLinksHits[0];
+                goredLinksHits[0] = 0;
+            }
+            else
+            {
+                foreach (Player p in Main.player)
+                {
+                    if (p.TryGetModPlayer(out LinkPlayer lp))
+                    {
+                        if (lp.target == Player && lp.goredLinks)
+                        {
+                            lp.goredLinksHits[2] = lp.goredLinksHits[1];
+                            lp.goredLinksHits[1] = lp.goredLinksHits[0];
+                            lp.goredLinksHits[0] = 0;
+                        }
+                    }
+                }
+            }
+            base.OnHitAnything(x, y, victim);
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            foreach (Player p in Main.player)
+            {
+                if (p.TryGetModPlayer(out LinkPlayer lp))
+                {
+                    if (lp.target == Player && lp.goredLinks && lp.goredLinksHits[2] - 60 <= lp.goredLinksHits[0] && lp.goredLinksHits[0] <= 60)
+                    {
+                        modifiers.FlatBonusDamage += 3;
+                    }
+                }
+            }
+            base.ModifyHitNPC(target, ref modifiers);
+        }
 
         public override void ResetEffects()
         {
-            // Note: this will go badly if any of these aren't constantly set each tick: watch out for this
             linkRange = -69;
             linkDamage = 0;
             linkCrit = 0;
@@ -211,7 +299,17 @@ namespace AlarmMod.Link
             linkMoveSpeed = 0;
             linkRegen = 0;
             cosmicSet = false;
-            afflictedLinks = false;
+            afflictedLinks = -1;
+            if (!goredLinks)
+            {
+                goredLinksHits = Array.Empty<int>();
+            }
+            else
+            {
+                goredLinksHits[0]++;
+                goredLinksHits[1]++;
+                goredLinksHits[2]++;
+            }
             goredLinks = false;
             cufflinks = false;
             spectralChains = false;

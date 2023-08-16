@@ -13,7 +13,7 @@ namespace AlarmMod.Link.Links
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.autoReuse = true;
             Item.useTurn = true;
-            Item.value = Item.sellPrice(silver: 50);
+            Item.value = Item.buyPrice(gold: 3);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item29;
             Item.useTime = 38;
@@ -25,8 +25,9 @@ namespace AlarmMod.Link.Links
         {
             if (player.TryGetModPlayer(out LinkPlayer lp))
             {
-                lp.linkRange = 10;
-                lp.linkRegen += 1;
+                lp.linkRange = 14;
+                lp.cufflinks = true;
+                lp.DrawLink(19); // Gold Coin projectile
             }
         }
 
@@ -38,14 +39,18 @@ namespace AlarmMod.Link.Links
             }
             return false;
         }
+    }
 
-        public override void AddRecipes()
+   public class CufflinksNPC : GlobalNPC
+    {
+        public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
         {
-            CreateRecipe()
-                .AddRecipeGroup("Wood", 8)
-                .AddIngredient(ItemID.FallenStar, 3)
-                .AddTile(TileID.DemonAltar)
-                .Register();
+            return entity.type == NPCID.Clothier;
+        }
+
+        public override void ModifyShop(NPCShop shop)
+        {
+            shop.Add<Cufflinks>();
         }
     }
 }

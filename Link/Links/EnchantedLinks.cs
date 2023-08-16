@@ -27,6 +27,7 @@ namespace AlarmMod.Link.Links
             {
                 lp.linkRange = 10;
                 lp.linkDefense += 4;
+                lp.DrawLink(15); // Fallen Star Trail
             }
         }
 

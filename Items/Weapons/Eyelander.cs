@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace AlarmMod.Items.Weapons
 {
-    public class EnchantedLinks : ModItem
+    public class Eyelander : ModItem
     {
         public override void SetDefaults()
         {

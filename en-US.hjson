@@ -299,6 +299,106 @@ Mods: {
 				Tooltip: ""
 				DisplayName: Mournic Halberd
 			}
+
+			AdamantiteLinks: {
+				DisplayName: Adamantite Links
+				Tooltip: ""
+			}
+
+			AfflictedLinks: {
+				DisplayName: Afflicted Links
+				Tooltip: ""
+			}
+
+			CobaltLinks: {
+				DisplayName: Cobalt Links
+				Tooltip: ""
+			}
+
+			Cufflinks: {
+				DisplayName: Cufflinks
+				Tooltip: ""
+			}
+
+			EnchantedLinks: {
+				DisplayName: Enchanted Links
+				Tooltip: ""
+			}
+
+			FlayedFlora: {
+				DisplayName: Flayed Flora
+				Tooltip: ""
+			}
+
+			Fractures: {
+				DisplayName: Fractures
+				Tooltip: ""
+			}
+
+			Gilgami: {
+				DisplayName: Gilgami
+				Tooltip: ""
+			}
+
+			GoredLinks: {
+				DisplayName: Gored Links
+				Tooltip: ""
+			}
+
+			HallowedLinks: {
+				DisplayName: Hallowed Links
+				Tooltip: ""
+			}
+
+			IgnisBonds: {
+				DisplayName: Ignis Bonds
+				Tooltip: ""
+			}
+
+			IllOmens: {
+				DisplayName: Ill Omens
+				Tooltip: ""
+			}
+
+			MythrilLinks: {
+				DisplayName: Mythril Links
+				Tooltip: ""
+			}
+
+			OrichalcumLinks: {
+				DisplayName: Orichalcum Links
+				Tooltip: ""
+			}
+
+			PalladiumLinks: {
+				DisplayName: Palladium Links
+				Tooltip: ""
+			}
+
+			PrismaticLinks: {
+				DisplayName: Prismatic Links
+				Tooltip: ""
+			}
+
+			RefractiveLinks: {
+				DisplayName: Refractive Links
+				Tooltip: ""
+			}
+
+			SpectralChains: {
+				DisplayName: Spectral Chains
+				Tooltip: ""
+			}
+
+			TitaniumLinks: {
+				DisplayName: Titanium Links
+				Tooltip: ""
+			}
+
+			Uplinks: {
+				DisplayName: Uplinks
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
