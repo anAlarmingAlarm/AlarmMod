@@ -1,0 +1,329 @@
+Mods: {
+	AlarmMod: {
+		Buffs: {
+			DodgeCooldown: {
+				DisplayName: Off Balance
+				Description: You cannot dodge again
+			}
+
+			AsgardAccessories: {
+				DisplayName: Dodging
+				Description: You are temporarily intangible
+			}
+
+			BarrierCooldown: {
+				DisplayName: Depleted Ward
+				Description: You cannot summon another ward
+			}
+
+			AlchemizerIchor: {
+				DisplayName: Alchemic Ichor
+				Description: Reduced defense
+			}
+
+			AlchemizerPoison: {
+				DisplayName: Alchemic Poison
+				Description: Losing life
+			}
+
+			Unworthy: {
+				DisplayName: Unworthy
+				Description: You have been deemed unworthy
+			}
+
+			Link: {
+				DisplayName: Link
+				Description: Mods.AlarmMod.Buffs.Link.Description
+			}
+
+			Linknt: {
+				DisplayName: Linknt
+				Description: Mods.AlarmMod.Buffs.Linknt.Description
+			}
+		}
+
+		Items: {
+			AsgardianGauntlet: {
+				DisplayName: Asgardian Gauntlet
+				Tooltip:
+					'''
+					15% increased damage
+					Press the dodge key to dodge incoming attacks
+					Grants the Bewitched effect
+					'The cheering of crowds echoes in your ears as you fight'
+					'''
+			}
+
+			AsgardianRing: {
+				DisplayName: Asgardian Ring
+				Tooltip:
+					'''
+					Press the dodge key to dodge incoming attacks
+					'You feel like you're destined for glory'
+					'''
+			}
+
+			MythicalInsignia: {
+				DisplayName: Mythical Insignia
+				Tooltip:
+					'''
+					Provides life regeneration
+					Reduces the cooldown of healing potions by 25%
+					Grants infinite wing and rocket boot flight
+					Increases flight and jump mobility
+					'''
+			}
+
+			UnluckyHorseshoe: {
+				DisplayName: Unlucky Horseshoe
+				Tooltip: Taking damage has a chance to instantly kill you
+			}
+
+			WardingBook: {
+				DisplayName: Warding Book
+				Tooltip: Press the Barrier key to block incoming projectiles
+			}
+
+			TomeOfDimensions: {
+				DisplayName: Tome of Dimensions
+				Tooltip: "'Experience a limited slice of the third dimension today!'"
+			}
+
+			Clentamifle: {
+				DisplayName: Clentamifle
+				Tooltip:
+					'''
+					Creates and destroys biomes when fired
+					Uses colored solution
+					'''
+			}
+
+			ConfettiMachineGun: {
+				DisplayName: Confetti Machine Gun
+				Tooltip: "'Now with 238% more lag!*'"
+			}
+
+			DiscoRifle: {
+				DisplayName: Disco Rifle
+				Tooltip: "'Do not use indoors'"
+			}
+
+			GrowthOrb: {
+				DisplayName: Orb of Growth
+				Tooltip: Permanently increases maximum life to 500 if it is already at least 400
+			}
+
+			LifeOrb: {
+				DisplayName: Orb of Life
+				Tooltip: Permanently increases maximum life to 400
+			}
+
+			ManaOrb: {
+				DisplayName: Orb of Mana
+				Tooltip: Permanently increases maximum mana to 200
+			}
+
+			OriginOrb: {
+				DisplayName: Orb of Origins
+				Tooltip: Permanently increases maximum life to 500 and maximum mana to 200
+			}
+
+			PowerOrb: {
+				DisplayName: Orb of Power
+				Tooltip: Permanently increases maximum life to 400 and maximum mana to 200
+			}
+
+			TomeOfEntropy: {
+				DisplayName: Tome of Entropy
+				Tooltip: Sets the world to Hardmode
+			}
+
+			VitalityOrb: {
+				DisplayName: Orb of Vitality
+				Tooltip: Permanently increases maximum life to 500
+			}
+
+			MagicBomb: {
+				DisplayName: Magic Bomb
+				Tooltip: Summons a bomb
+			}
+
+			GrimStatue: {
+				DisplayName: Grim Statue
+				Tooltip: Turns the area into a Graveyard
+			}
+
+			SuperConfettiMachineGun: {
+				DisplayName: P.C.D.P.
+				Tooltip:
+					'''
+					Rapidly fires immense amounts of confetti
+					Will also probably hit the cap for confetti in one area fairly quickly
+					'We are not responsible for any damage, physical, psychological, or otherwise, caused by the Prototype Confetti Deployment Platform'
+					'''
+			}
+
+			Alchemizer: {
+				DisplayName: Alchemizer
+				Tooltip:
+					'''
+					Amplifies the effects of active flasks
+					Always inflicts flask effects for the maximum duration
+					'''
+			}
+
+			Devolver: {
+				DisplayName: Devolver
+				Tooltip: "'What could possibly go wrong?'"
+			}
+
+			Eyelander: {
+				DisplayName: Eyelander
+				Tooltip:
+					'''
+					Empowered when the user is Tipsy
+					'Hae at 'em, lads!'
+					'''
+			}
+
+			MarksmanRifle: {
+				DisplayName: Marksman Rifle
+				Tooltip: ""
+			}
+
+			MasterSword: {
+				DisplayName: Master Sword
+				Tooltip:
+					'''
+					Empowered while the user is above 90% health
+					'The Blade of Evil's Bane'
+					'''
+			}
+
+			SpectralBlade: {
+				DisplayName: Spectral Blade
+				Tooltip:
+					'''
+					Summons a ghastly blade
+					Ignores enemy defense
+					'''
+			}
+
+			SpectralFlurry: {
+				DisplayName: Spectral Flurry
+				Tooltip:
+					'''
+					Summons a burst of ghastly blades
+					Ignores enemy defense
+					'''
+			}
+
+			SpectralSurge: {
+				DisplayName: Spectral Surge
+				Tooltip:
+					'''
+					Summons a barrage of ghastly blades
+					Ignores enemy defense
+					'''
+			}
+
+			Spinblade: {
+				DisplayName: Spinblade
+				Tooltip: "'Three-in-one!'"
+			}
+
+			StarlitStrikers: {
+				DisplayName: Starlit Strikers
+				Tooltip: ""
+			}
+
+			TerraTrashCannon: {
+				DisplayName: Terra Trash Cannon
+				Tooltip:
+					'''
+					'Trash can, and trash will'
+					Yes, I know this sprite is awful. No, I do not care.
+					'''
+			}
+
+			TrashCannon: {
+				DisplayName: Trash Cannon
+				Tooltip: "'It's called a trash can, not a trash can't'"
+			}
+
+			UFO: {
+				DisplayName: UFO
+				Tooltip:
+					'''
+					Allows infinite air jumps
+					Negates fall damage
+					'''
+			}
+
+			TelementalStaff: {
+				DisplayName: Telemental Staff
+				Tooltip: Switch places with your target
+			}
+
+			BonkingStick: {
+				DisplayName: Bonking Stick
+				Tooltip: Removes struck enemies
+			}
+
+			BladeofGrass: {
+				DisplayName: Ancient Blade of Grass
+				Tooltip: Has a chance to poison enemies
+			}
+
+			AFKDevice: {
+				DisplayName: AFK Device
+				Tooltip: Makes you unable to move or deal damage, and after a delay makes you intangible
+			}
+
+			LivingWoodBreastplate: {
+				DisplayName: Living Wood Breastplate
+				Tooltip: ""
+			}
+
+			LivingWoodCirclet: {
+				DisplayName: Living Wood Circlet
+				Tooltip: ""
+			}
+
+			LivingWoodLeggings: {
+				DisplayName: Living Wood Leggings
+				Tooltip: ""
+			}
+
+			MournicHalberd: {
+				Tooltip: ""
+				DisplayName: Mournic Halberd
+			}
+		}
+
+		Projectiles: {
+			Barrier.DisplayName: Barrier
+			MasterBeam.DisplayName: Master Beam
+			MasterHitEffect.DisplayName: Master Beamn't
+			SpectralEcho.DisplayName: Spectral Blade
+			SpectralHitEffectMajor.DisplayName: Spectral Blade
+			SpectralHitEffectMinor.DisplayName: Spectral Blade
+			SpectralSword.DisplayName: Spectral Blade
+			SpinbladeProjectile.DisplayName: Spinblade
+			TrashProjectile.DisplayName: Trash
+			TeleBolt.DisplayName: Tele Bolt
+			MournicHalberdProjectile.DisplayName: Mournic Halberd Projectile
+		}
+
+		Tiles.GrimStatue.MapEntry: Grim Statue
+
+		Keybinds: {
+			Dodge.DisplayName: Dodge
+			Barrier.DisplayName: Barrier
+			"Cycle Ammo Slots.DisplayName": Cycle  Ammo  Slots
+			"Toggle Defender's Forge Autobuff.DisplayName": Toggle  Defender's  Forge  Autobuff
+			"Locker Menu Debug.DisplayName": Locker  Menu  Debug
+			"Toggle AFK Mode.DisplayName": Toggle  A F K  Mode
+		}
+	}
+}

@@ -1,0 +1,63 @@
+﻿using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace AlarmMod.Items
+{
+    public class SuperConfettiMachineGun : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(3, 72));
+            ItemID.Sets.AnimatesAsSoul[Item.type] = true; // Have animation while dropped too
+        }
+
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.ConfettiGun);
+
+            Item.useTime = 3;
+            Item.useAnimation = 3;
+            Item.width = 56;
+            Item.height = 32;
+            Item.maxStack = 1;
+            Item.autoReuse = true;
+            Item.consumable = false;
+            Item.shootSpeed *= 4f;
+            Item.rare = ItemRarityID.LightPurple;
+            Item.value = Item.buyPrice(platinum: 5, gold: 10);
+            Item.attackSpeedOnlyAffectsWeaponAnimation = true; // prevent this from going below 2 use time to prevent Bad Things(tm)
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<ConfettiMachineGun>()
+                .AddIngredient(ItemID.HallowedBar, 10)
+                .AddIngredient(ItemID.SoulofLight, 5)
+                .AddIngredient(ItemID.SoulofFright, 5)
+                .AddIngredient(ItemID.Cog, 5)
+                .AddIngredient(ItemID.SoulofSight, 5)
+                .AddIngredient(ItemID.SoulofFlight, 5)
+                .AddIngredient(ItemID.SoulofMight, 5)
+                .AddIngredient(ItemID.SoulofNight, 5)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+        }
+
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            velocity = velocity.RotatedByRandom(MathHelper.ToRadians(3)); // slight inaccuracy to give it more visual oomph
+
+            // make the confetti actually come out of the barrels
+            Vector2 muzzleOffset = Vector2.Normalize(velocity) * 20f;
+            if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
+            {
+                position += muzzleOffset;
+            }
+        }
+    }
+}

@@ -1,0 +1,85 @@
+﻿using AlarmMod.Items.Weapons;
+using log4net.Core;
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ModLoader;
+
+namespace AlarmMod.Projectiles
+{
+    public class MasterBeam : ModProjectile
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Master Beam");
+        }
+
+        public override void SetDefaults()
+        {
+
+            Projectile.width = 38;
+            Projectile.height = 38;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.tileCollide = true;
+            Projectile.timeLeft = 180;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
+        }
+
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (target.CountsAsACritter)
+            {
+                damage = 1;
+                Main.player[Projectile.owner].AddBuff(ModContent.BuffType<Unworthy>(), 300);
+                Main.player[Projectile.owner].Hurt(PlayerDeathReason.ByCustomReason(Main.player[Projectile.owner] + "was deemed unworthy."), 50, 0);
+            }
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, Projectile.velocity, ModContent.ProjectileType<MasterHitEffect>(), 0, 0, Main.myPlayer);
+        }
+    }
+
+    public class MasterHitEffect : ModProjectile
+    {
+        public override string Texture => "AlarmMod/Projectiles/MasterBeam";
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Master Beamn't");
+        }
+
+        public override void SetDefaults()
+        {
+
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 125;
+            Projectile.timeLeft = 15;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
+            Projectile.velocity = new(0, 0);
+        }
+
+        public override void AI()
+        {
+            Projectile.alpha += (130 / 15);
+            Projectile.scale *= 1.05f;
+        }
+
+        public override bool? CanDamage()
+        {
+            return false;
+        }
+    }
+}

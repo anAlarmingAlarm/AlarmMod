@@ -1,0 +1,250 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace AlarmMod.Items.Weapons
+{
+    public class Alchemizer : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Amplifies the effects of active flasks\nAlways inflicts flask effects for the maximum duration");
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.width = 46;
+            Item.height = 46;
+            Item.scale = 1.5f;
+            Item.DamageType = DamageClass.Melee;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.autoReuse = true;
+            Item.useTurn = true;
+            Item.value = Item.sellPrice(gold: 5);
+            Item.rare = ItemRarityID.Pink;
+            Item.UseSound = SoundID.Item1;
+
+            Item.damage = 50;
+            Item.useTime = 16;
+            Item.useAnimation = 16;
+            Item.knockBack = 6;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.LocalPlayer.HasBuff(BuffID.WeaponImbueConfetti))
+            {
+                tooltips.Find(line => line.Name == "Tooltip1").Text = "Flask of Confetti: Guess.";
+            }
+            else if (Main.LocalPlayer.HasBuff(BuffID.WeaponImbueCursedFlames))
+            {
+                tooltips.Find(line => line.Name == "Tooltip1").Text = "Flask of Cursed Flames: Inflicted enemies are oiled for increased damage";
+            }
+            else if (Main.LocalPlayer.HasBuff(BuffID.WeaponImbueFire))
+            {
+                tooltips.Find(line => line.Name == "Tooltip1").Text = "Flask of Fire: Inflicted enemies also receive Hellfire";
+            }
+            else if (Main.LocalPlayer.HasBuff(BuffID.WeaponImbuePoison))
+            {
+                tooltips.Find(line => line.Name == "Tooltip1").Text = "Flask of Poison: Damage over time increased";
+            }
+            else if (Main.LocalPlayer.HasBuff(BuffID.WeaponImbueVenom))
+            {
+                tooltips.Find(line => line.Name == "Tooltip1").Text = "Flask of Venom: Inflicted enemies also receive Shadowflame";
+            }
+            else if (Main.LocalPlayer.HasBuff(BuffID.WeaponImbueGold))
+            {
+                tooltips.Find(line => line.Name == "Tooltip1").Text = "Flask of Gold: Grants Copper Coins equal to half the damage you deal";
+            }
+            else if (Main.LocalPlayer.HasBuff(BuffID.WeaponImbueIchor))
+            {
+                tooltips.Find(line => line.Name == "Tooltip1").Text = "Flask of Ichor: Defense reduction increased";
+            }
+            else if (Main.LocalPlayer.HasBuff(BuffID.WeaponImbueNanites))
+            {
+                tooltips.Find(line => line.Name == "Tooltip1").Text = "Flask of Nanites: Knockback increased";
+            }
+            else
+            {
+                tooltips.Find(line => line.Name == "Tooltip1").Text = "No flask active";
+            }
+
+            base.ModifyTooltips(tooltips);
+        }
+
+        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        {
+            if (player.HasBuff(BuffID.WeaponImbueCursedFlames))
+            {
+                target.AddBuff(BuffID.CursedInferno, 360);
+                target.AddBuff(BuffID.Oiled, 360);
+            }
+            else if (player.HasBuff(BuffID.WeaponImbueFire))
+            {
+                target.AddBuff(BuffID.OnFire, 540);
+                target.AddBuff(BuffID.OnFire3, 540);
+            }
+            else if (player.HasBuff(BuffID.WeaponImbuePoison))
+            {
+                target.AddBuff(BuffID.Poisoned, 600);
+                target.AddBuff(ModContent.BuffType<AlchemizerPoison>(), 600);
+            }
+            else if (player.HasBuff(BuffID.WeaponImbueVenom))
+            {
+                target.AddBuff(BuffID.Venom, 540);
+                target.AddBuff(BuffID.ShadowFlame, 540);
+            }
+            else if (player.HasBuff(BuffID.WeaponImbueIchor))
+            {
+                target.AddBuff(BuffID.Ichor, 1140);
+                target.AddBuff(ModContent.BuffType<AlchemizerIchor>(), 1140);
+            }
+            else if (player.HasBuff(BuffID.WeaponImbueNanites))
+            {
+                target.AddBuff(BuffID.Confused, 180);
+            }
+            else if (player.HasBuff(BuffID.WeaponImbueGold))
+            {
+                player.QuickSpawnItem(player.GetSource_ItemUse(Item), ItemID.CopperCoin, damage / 2);
+            }
+
+            base.OnHitNPC(player, target, damage, knockBack, crit);
+        }
+
+        public override void ModifyWeaponKnockback(Player player, ref StatModifier knockback)
+        {
+            if (player.HasBuff(BuffID.WeaponImbueNanites))
+            {
+                knockback *= 2.5f;
+            }
+
+            base.ModifyWeaponKnockback(player, ref knockback);
+        }
+
+        public override void MeleeEffects(Player player, Rectangle hitbox)
+        {
+            //Duplicate Flask of Confetti effects if active
+            if (player.HasBuff(BuffID.WeaponImbueConfetti))
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    if (Main.rand.NextBool(20))
+                    {
+                        int type3 = Main.rand.Next(139, 143);
+                        int num20 = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, type3, player.velocity.X, player.velocity.Y, 0, default(Color), 1.2f);
+                        Main.dust[num20].velocity.X *= 1f + (float)Main.rand.Next(-50, 51) * 0.01f;
+                        Main.dust[num20].velocity.Y *= 1f + (float)Main.rand.Next(-50, 51) * 0.01f;
+                        Main.dust[num20].velocity.X += (float)Main.rand.Next(-50, 51) * 0.05f;
+                        Main.dust[num20].velocity.Y += (float)Main.rand.Next(-50, 51) * 0.05f;
+                        Main.dust[num20].scale *= 1f + (float)Main.rand.Next(-30, 31) * 0.01f;
+                    }
+                    if (Main.rand.NextBool(40))
+                    {
+                        int type4 = Main.rand.Next(276, 283);
+                        int num21 = Gore.NewGore(player.GetSource_ItemUse(Item), new Vector2(hitbox.X, hitbox.Y), player.velocity, type4);
+                        Main.gore[num21].velocity.X *= 1f + (float)Main.rand.Next(-50, 51) * 0.01f;
+                        Main.gore[num21].velocity.Y *= 1f + (float)Main.rand.Next(-50, 51) * 0.01f;
+                        Main.gore[num21].scale *= 1f + (float)Main.rand.Next(-20, 21) * 0.01f;
+                        Main.gore[num21].velocity.X += (float)Main.rand.Next(-50, 51) * 0.05f;
+                        Main.gore[num21].velocity.Y += (float)Main.rand.Next(-50, 51) * 0.05f;
+                    }
+                }
+                
+            }
+            
+            base.MeleeEffects(player, hitbox);
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.SilverBar, 16)
+                .AddIngredient(ItemID.SoulofSight, 10)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.TungstenBar, 16)
+                .AddIngredient(ItemID.SoulofSight, 10)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+        }
+    }
+
+    public class AlchemizerIchor : ModBuff
+    {
+        public override string Texture => "AlarmMod/Buffs/AlchemizerIchor";
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Alchemic Ichor");
+            Description.SetDefault("Reduced defense");
+            Main.debuff[Type] = true;
+            Main.buffNoSave[Type] = true;
+        }
+
+        public override void Update(NPC npc, ref int buffIndex)
+        {
+            if (npc.HasBuff(BuffID.Ichor)) npc.defense -= 15;
+            else
+            {
+                npc.DelBuff(buffIndex);
+            }
+
+            base.Update(npc, ref buffIndex);
+        }
+    }
+
+    public class AlchemizerPoison : ModBuff
+    {
+        public override string Texture => "AlarmMod/Buffs/AlchemizerPoison";
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Alchemic Poison");
+            Description.SetDefault("Losing life");
+            Main.debuff[Type] = true;
+            Main.buffNoSave[Type] = true;
+        }
+
+        public override void Update(NPC npc, ref int buffIndex)
+        {
+            if (npc.HasBuff(BuffID.Poisoned)) npc.GetGlobalNPC<AlchemizerPoisonNPC>().lifeRegenDebuff = true;
+            else
+            {
+                npc.DelBuff(buffIndex);
+            }
+        }
+    }
+
+    public class AlchemizerPoisonNPC : GlobalNPC
+    {
+        public override bool InstancePerEntity => true;
+        public bool lifeRegenDebuff;
+
+        public override void ResetEffects(NPC npc)
+        {
+            lifeRegenDebuff = false;
+        }
+
+        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        {
+            if (lifeRegenDebuff && npc.HasBuff(BuffID.Poisoned))
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                // lifeRegen is measured in 1/2 life per second. Therefore, this effect causes 14 life lost per second
+                npc.lifeRegen -= 28;
+            }
+        }
+    }
+}

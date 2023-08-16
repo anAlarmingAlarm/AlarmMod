@@ -1,0 +1,59 @@
+﻿using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ID;
+using Terraria.DataStructures;
+using Terraria.ModLoader;
+using AlarmMod.Items.Weapons;
+using System;
+
+namespace AlarmMod.Projectiles
+{
+    public class SpinbladeProjectile : ModProjectile
+    {
+        public override void SetDefaults()
+        {
+            Projectile.width = 82;
+            Projectile.height = 82;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.penetrate = -1;
+            Projectile.light = 0f;
+            Projectile.alpha = 0;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 3600;
+            Projectile.aiStyle = 0;
+        }
+
+        public override void AI()
+        {
+            Projectile.rotation += 0.5f;
+            
+            // Play boomerang sound constantly
+            if (Projectile.soundDelay == 0)
+            {
+                Projectile.soundDelay = 8;
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item7, Projectile.position);
+            }
+
+            //After a second home back into the player
+            if (Projectile.timeLeft < 3570)
+            {
+                //When touching player, kill projectile
+                if (Projectile.Distance(Main.player[Projectile.owner].Center) < 50f)
+                {
+                    Projectile.Kill();
+                }
+                else
+                //Otherwise, home towards player (move faster if it's been traveling for 5 seconds and still hasn't gotten back to the player)
+                {
+                    Projectile.velocity = (Main.player[Projectile.owner].Center - Projectile.Center).SafeNormalize(Vector2.Zero) * (Projectile.timeLeft > 3270 ? 12f : 36f);
+                }
+            }
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            Main.player[Projectile.owner].GetModPlayer<SpinbladePlayer>().remainingSpinblades++;
+        }
+    }
+}

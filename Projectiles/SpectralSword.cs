@@ -1,0 +1,196 @@
+﻿using log4net.Core;
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ModLoader;
+
+namespace AlarmMod.Projectiles
+{
+    public class SpectralSword : ModProjectile
+    {
+        public override void SetDefaults()
+        {
+
+            Projectile.width = 24;
+            Projectile.height = 24;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 45;
+            Projectile.light = 0.5f;
+            Projectile.timeLeft = 120;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (Main.myPlayer == Projectile.owner && target.active && target.life > 0)
+            {
+                Vector2 newPos = new(0, 0);
+                Vector2 newVel = new(0, 0);
+
+                switch (Main.rand.Next(8))
+                {
+                    case 0:
+                        newPos.Y = target.Size.Y + 100f;
+
+                        newVel.Y = -14f;
+                        break;
+                    case 1:
+                        newPos.X = target.Size.X + 100f;
+                        newPos.Y = target.Size.Y + 100f;
+
+                        newVel.X = -14f;
+                        newVel.Y = -14f;
+                        break;
+                    case 2:
+                        newPos.X = target.Size.X + 100f;
+
+                        newVel.X = -14f;
+                        break;
+                    case 3:
+                        newPos.X = target.Size.X + 100f;
+                        newPos.Y = -target.Size.Y - 100f;
+
+                        newVel.X = -14f;
+                        newVel.Y = 14f;
+                        break;
+                    case 4:
+                        newPos.Y = -target.Size.Y - 100f;
+
+                        newVel.Y = 14f;
+                        break;
+                    case 5:
+                        newPos.X = -target.Size.X - 100f;
+                        newPos.Y = -target.Size.Y - 100f;
+
+                        newVel.X = 14f;
+                        newVel.Y = 14f;
+                        break;
+                    case 6:
+                        newPos.X = -target.Size.X - 100f;
+
+                        newVel.X = 14f;
+                        break;
+                    case 7:
+                        newPos.X = -target.Size.X - 100f;
+                        newPos.Y = target.Size.Y + 100f;
+
+                        newVel.X = 14f;
+                        newVel.Y = -14f;
+                        break;
+                }
+
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.position + newPos, newVel * 1.5f, ModContent.ProjectileType<SpectralEcho>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                
+            }
+            Projectile.Kill();
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, Projectile.velocity, ModContent.ProjectileType<SpectralHitEffectMajor>(), 0, 0, Main.myPlayer);
+        }
+    }
+    public class SpectralEcho : ModProjectile
+    {
+        public override string Texture => "AlarmMod/Projectiles/SpectralSword";
+
+        public override void SetDefaults()
+        {
+
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 125;
+            Projectile.light = 0.3f;
+            Projectile.timeLeft = 80;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, Projectile.velocity, ModContent.ProjectileType<SpectralHitEffectMinor>(), 0, 0, Main.myPlayer);
+        }
+    }
+    public class SpectralHitEffectMajor : ModProjectile
+    {
+        public override string Texture => "AlarmMod/Projectiles/SpectralSword";
+
+        public override void SetDefaults()
+        {
+
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.tileCollide = false;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 45;
+            Projectile.light = 0.5f;
+            Projectile.timeLeft = 15;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
+            Projectile.velocity = new(0, 0);
+        }
+
+        public override void AI()
+        {
+            Projectile.alpha += 12;
+            Projectile.scale *= 1.05f;
+            Projectile.light -= (1f / 30f);
+        }
+
+        public override bool? CanDamage()
+        {
+            return false;
+        }
+    }
+    public class SpectralHitEffectMinor : ModProjectile
+    {
+        public override string Texture => "AlarmMod/Projectiles/SpectralSword";
+
+        public override void SetDefaults()
+        {
+
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.tileCollide = false;
+            Projectile.penetrate = 1;
+            Projectile.alpha = 125;
+            Projectile.light = 0.3f;
+            Projectile.timeLeft = 15;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
+            Projectile.velocity = new(0, 0);
+        }
+
+        public override void AI()
+        {
+            Projectile.alpha += (130 / 15);
+            Projectile.scale *= 1.05f;
+            Projectile.light -= 0.02f;
+        }
+
+        public override bool? CanDamage()
+        {
+            return false;
+        }
+    }
+}

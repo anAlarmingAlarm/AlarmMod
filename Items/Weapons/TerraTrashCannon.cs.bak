@@ -1,0 +1,70 @@
+﻿using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
+using AlarmMod.Projectiles;
+
+namespace AlarmMod.Items.Weapons
+{
+    public class TerraTrashCannon : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("'Trash can, and trash will'\nYes, I know this sprite is awful. No, I do not care.");
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.width = 40;
+            Item.height = 48;
+            Item.rare = ItemRarityID.Lime;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.UseSound = SoundID.DD2_BallistaTowerShot;
+
+            Item.DamageType = DamageClass.Ranged;
+            Item.damage = 333;
+            Item.useTime = 120;
+            Item.useAnimation = 120;
+            Item.knockBack = 16f;
+            Item.noMelee = true;
+            Item.shoot = ModContent.ProjectileType<TrashProjectile>();
+            Item.shootSpeed = 18f;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<TrashCannon>()
+                .AddIngredient(ItemID.BrokenHeroSword)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+        }
+
+        // Adjust gun position to correlate with hand
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(2f, 4f);
+        }
+
+
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            player.velocity.X += (velocity.X < 0) ? 10f : -10f;
+            player.velocity.Y += (velocity.Y < 0) ? 5f : 5f;
+
+            return true;
+		}
+
+        // Make shots appear out of muzzle
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			Vector2 muzzleOffset = Vector2.Normalize(velocity) * 40f;
+			if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0)) {
+				position += muzzleOffset;
+			}
+		}
+    }
+}

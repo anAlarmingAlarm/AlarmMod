@@ -1,0 +1,35 @@
+﻿using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace AlarmMod.Items.Weapons
+{
+    public class MarksmanRifle : ModItem
+    {
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.Musket);
+
+            Item.damage = 27;
+            Item.useTime = 24;
+            Item.useAnimation = 24;
+            Item.knockBack = 4;
+            Item.value = Item.sellPrice(gold: 3);
+        }
+
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-4f, 0f);
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.Musket)
+                .AddIngredient(ItemID.IllegalGunParts)
+                .AddTile(TileID.Furnaces)
+                .Register();
+        }
+    }
+}

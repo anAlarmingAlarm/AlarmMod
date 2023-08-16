@@ -1,0 +1,48 @@
+﻿using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace AlarmMod.Items
+{
+    public class Clentamifle : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Clentamifle");
+            Tooltip.SetDefault("Creates and destroys biomes when fired\nUses colored solution");
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.Clentaminator);
+
+            Item.width = 52;
+            Item.height = 22;
+            Item.useTime = 10;
+            Item.useAnimation = 10;
+            Item.reuseDelay = 80;
+            Item.shootSpeed *= 4f;
+            Item.value = Item.sellPrice(gold: 45);
+        }
+
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-2f, 0f);
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.Clentaminator)
+                .AddIngredient(ItemID.RifleScope)
+                .AddIngredient(ItemID.Cog, 10)
+                .AddIngredient(ItemID.Nanites, 5)
+                .AddTile(TileID.Furnaces)
+                .Register();
+        }
+    }
+}

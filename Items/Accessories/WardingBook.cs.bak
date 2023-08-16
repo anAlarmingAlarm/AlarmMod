@@ -1,0 +1,108 @@
+﻿using Terraria;
+using Terraria.ID;
+using Terraria.GameContent.Creative;
+using Terraria.ModLoader;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.GameInput;
+using Microsoft.Xna.Framework;
+using AlarmMod.Projectiles;
+
+namespace AlarmMod.Items.Accessories
+{
+    public class WardingBook : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Press the Barrier key to block incoming projectiles");
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.width = 28;
+            Item.height = 30;
+            Item.value = Item.sellPrice(gold: 1);
+            Item.rare = ItemRarityID.Orange;
+            Item.accessory = true;
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            player.GetModPlayer<BarrierPlayer>().book = true;
+            player.GetModPlayer<BarrierPlayer>().item = Item;
+        }
+    }
+
+    public class BarrierPlayer : ModPlayer
+    {
+        public bool book;
+        public Item item;
+
+        public override void ResetEffects()
+        {
+            book = false;
+            item = null;
+
+            base.ResetEffects();
+        }
+
+        public override void ProcessTriggers(TriggersSet triggersSet)
+        {
+            if (book && BarrierKeySystem.BarrierKeybind.JustPressed && !Player.HasBuff<BarrierCooldown>())
+            {
+                if (Main.myPlayer == Player.whoAmI)
+                {
+                    Projectile.NewProjectile(Player.GetSource_Accessory(item), Player.Center, Vector2.Zero, ModContent.ProjectileType<Barrier>(), 0, 0, Main.myPlayer);
+                }
+                Player.AddBuff(ModContent.BuffType<BarrierCooldown>(), 420);
+            }
+        }
+    }
+
+    public class BarrierCooldown : ModBuff
+    {
+        public override string Texture => "AlarmMod/Buffs/BarrierCooldown";
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Depleted Ward");
+            Description.SetDefault("You cannot summon another ward");
+            Main.debuff[Type] = true;
+            Main.buffNoSave[Type] = true;
+        }
+    }
+
+    public class BarrierKeySystem : ModSystem
+    {
+        public static ModKeybind BarrierKeybind { get; private set; }
+
+        public override void Load()
+        {
+            BarrierKeybind = KeybindLoader.RegisterKeybind(Mod, "Barrier", "J");
+        }
+
+        public override void Unload()
+        {
+            BarrierKeybind = null; // not technically required but good practice
+        }
+    }
+
+    // 5% chance to drop from Pre-Hardmode Dungeon enemies
+    public class WardingBookDrop : GlobalNPC
+    {
+        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+        {
+            if (npc.type == NPCID.AngryBones ||
+                npc.type == NPCID.AngryBonesBig ||
+                npc.type == NPCID.AngryBonesBigHelmet ||
+                npc.type == NPCID.AngryBonesBigMuscle ||
+                npc.type == NPCID.DarkCaster ||
+                npc.type == NPCID.CursedSkull ||
+                npc.type == NPCID.DungeonSlime)
+            {
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<WardingBook>(), 20));
+            }
+        }
+    }
+}
