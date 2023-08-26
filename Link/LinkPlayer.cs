@@ -1,4 +1,5 @@
 ﻿using AlarmMod.Buffs;
+using AlarmMod.Projectiles;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -12,138 +13,88 @@ namespace AlarmMod.Link
     {
         // Values inherent to linking
 
-        ///<summary>
-        ///The player this player is linked to; null if not linked
-        ///</summary>
+        ///<summary> The player this player is linked to; null if not linked </summary>
         public Player target;
 
-        ///<summary>
-        ///The range of this player's link, in tiles; -69 if not holding a Link item
-        ///</summary>
+        ///<summary> The range of this player's link, in tiles; -69 if not holding a Link item </summary>
         public float linkRange;
 
 
 
         // Common bonuses between links
 
-        ///<summary>
-        ///The damage bonus the link target receives, not counting the base +75% for linking, in percent (i.e. 3 = +78% crit chance)
-        ///</summary>
+        ///<summary> The damage bonus the link target receives, not counting the base +75% for linking, in percent (i.e. 3 = +78% crit chance) </summary>
         public float linkDamage;
 
-        ///<summary>
-        ///The critical chance bonus the link target receives, in percent (i.e. 3 = +3% crit chance)
-        ///</summary>
+        ///<summary> The critical chance bonus the link target receives, in percent (i.e. 3 = +3% crit chance) </summary>
         public float linkCrit;
 
-        ///<summary>
-        ///The armor penetration bonus the link target receives
-        ///</summary>
+        ///<summary> The armor penetration bonus the link target receives </summary>
         public float linkArmorPen;
 
-        ///<summary>
-        ///// The defense bonus the link target receives
-        ///</summary>
+        ///<summary> The defense bonus the link target receives </summary>
         public int linkDefense;
 
-        ///<summary>
-        ///The damage reduction bonus the link target receives
-        ///</summary>
+        ///<summary> The damage reduction bonus the link target receives </summary>
         public float linkEndurance;
 
-        ///<summary>
-        ///The movement speed bonus the link target receives, in percent (i.e. 5 = +5% move speed)
-        ///</summary>
+        ///<summary> The movement speed bonus the link target receives, in percent (i.e. 5 = +5% move speed) </summary>
         public float linkMoveSpeed;
 
-        ///<summary>
-        ///How much life the link target regenerates per second
-        ///</summary>
+        ///<summary> How much life the link target regenerates per second </summary>
         public int linkRegen;
 
 
 
         // Specific link effects
 
-        ///<summary>
-        ///Cosmic Armor set effect (orbiting comets)
-        ///</summary>
+        ///<summary> Cosmic Armor set effect (orbiting comets) </summary>
         public bool cosmicSet;
 
-        ///<summary>
-        ///Afflicted Links effect (reduced damage with cooldown); -1 if disabled, 0 if active, above 0 if on cooldown
-        ///</summary>
+        ///<summary> Afflicted Links effect (reduced damage with cooldown); -1 if disabled, 0 if active, above 0 if on cooldown </summary>
         public int afflictedLinks;
 
-        ///<summary>
-        ///Gored Links effect (bonus damage when rapidly attacking)
-        ///</summary>
+        ///<summary> Gored Links effect (bonus damage when rapidly attacking) </summary>
         public bool goredLinks;
 
-        ///<summary>
-        ///Hits to track for the goredLinks effect
-        ///</summary>
+        ///<summary> Hits to track for the goredLinks effect </summary>
         public int[] goredLinksHits;
 
-        ///<summary>
-        ///Cufflinks effect (bonus armor penetration, but halved if the target has more than 0 already)
-        ///</summary>
+        ///<summary> Cufflinks effect (bonus armor penetration, but halved if the target has more than 0 already) </summary>
         public bool cufflinks;
 
-        ///<summary>
-        ///Spectral Chains effect (summon flames when no enemies nearby, target nearby enemies, disable if spiritualEffect)
-        ///</summary>
+        ///<summary> Spectral Chains effect (summon flames when no enemies nearby, target nearby enemies, disable if spiritualEffect) </summary>
         public bool spectralChains;
 
-        ///<summary>
-        ///1 for Hallowed Links effect (bonus link damage and Paladin's Shield effect while you have high hp),
-        ///2 for Refractive Links effect (stronger version of previous), 0 for neither effect
-        ///</summary>
+        ///<summary> 1 for Hallowed Links effect (bonus link damage and Paladin's Shield effect while you have high hp),
+        ///2 for Refractive Links effect (stronger version of previous), 0 for neither effect </summary>
         public int saviorEffect;
 
-        ///<summary>
-        ///Elegy Emblem effect, not including damage (increased stats if link target dies)
-        ///</summary>
+        ///<summary> Elegy Emblem effect, not including damage (increased stats if link target dies) </summary>
         public bool elegyEmblem;
 
-        ///<summary>
-        ///Clockwork Brace effect (clock mode)
-        ///</summary>
+        ///<summary> Clockwork Brace effect (clock mode) </summary>
         public bool clockworkBrace;
 
-        ///<summary>
-        ///Spiritual Armor set effect (summon flames when no enemies nearby, target nearby enemies, synergy if spectralChains)
-        ///</summary>
+        ///<summary> Spiritual Armor set effect (summon flames when no enemies nearby, target nearby enemies, synergy if spectralChains) </summary>
         public bool spiritualEffect;
 
-        ///<summary>
-        ///Prismatic Links effect (enemies within half of linkRange have *0.65 defense)
-        ///</summary>
+        ///<summary> Prismatic Links effect (enemies within half of linkRange have *0.65 defense) </summary>
         public bool pristmaticLinks;
 
-        ///<summary>
-        ///Uplinks effect (teleport out of the way of fatal damage and heal)
-        ///</summary>
+        ///<summary> Uplinks effect (teleport out of the way of fatal damage and heal) </summary>
         public bool uplinks;
 
-        ///<summary>
-        ///Whirlwind Armor set effect (press key to switch places and create two explosions)
-        ///</summary>
+        ///<summary> Whirlwind Armor set effect (press key to switch places and create two explosions) </summary>
         public bool whirlwindSet;
 
-        ///<summary>
-        ///Lens Arcana effect (attacks while linked mark enemies for bonus damage from link target)
-        ///</summary>
+        ///<summary> Lens Arcana effect (attacks while linked mark enemies for bonus damage from link target) </summary>
         public bool lensArcana;
 
-        ///<summary>
-        ///Fractures effect, not counting damage (all attacks from link target are duplicated)
-        ///</summary>
+        ///<summary> Fractures effect, not counting damage (all attacks from link target are duplicated) </summary>
         public bool fractures;
 
-        ///<summary>
-        ///TBBLOBNOERN effect (whirlwindSet cooldown is halved)
-        ///</summary>
+        ///<summary> TBBLOBNOERN effect (whirlwindSet cooldown is halved) </summary>
         public bool tbblobnoern;
 
         public override void PreUpdate()
@@ -195,6 +146,12 @@ namespace AlarmMod.Link
             {
                 Player.AddBuff(ModContent.BuffType<Linknt>(), 2);
             }
+
+            // Cosmic Set
+            if (cosmicSet && Player.ownedProjectileCounts[ModContent.ProjectileType<CometProjectile>()] < 2 && Main.myPlayer == Player.whoAmI)
+            {
+                Projectile.NewProjectile(Player.GetSource_FromThis("SetBonus_CosmicSet"), Player.Center, Vector2.Zero, ModContent.ProjectileType<CometProjectile>(), 12, 0, Main.myPlayer);
+            }
         }
 
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -213,7 +170,7 @@ namespace AlarmMod.Link
             return base.Shoot(item, source, position, velocity, type, damage, knockback);
         }
         
-        // Afflicted Links effects
+        ///<summary> Common on-hit code to handle Afflicted Links' reduced damage taken effect </summary>
         private void AfflictedLinkModifier(ref Player.HurtModifiers modifiers)
         {
             if (afflictedLinks == 0)
@@ -324,9 +281,7 @@ namespace AlarmMod.Link
             tbblobnoern = false;
         }
 
-        ///<summary>
-        ///Attempt to link this player to another player, returning true if successful or false if it fails
-        ///</summary>
+        ///<summary> Attempt to link this player to another player, returning true if successful or false if it fails </summary>
         public bool AttemptLink()
         {
             foreach (Player p in Main.player)
@@ -351,9 +306,7 @@ namespace AlarmMod.Link
             return false;
         }
 
-        ///<summary>
-        ///Draw dust for the link range and the link, if active
-        ///</summary>
+        ///<summary> Draw dust for the link range and the link, if active </summary>
         public void DrawLink(int dust, Color color = default) //
         {
             if (linkRange > 0) // This should never be false, but just in case
