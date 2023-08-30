@@ -31,7 +31,7 @@ namespace AlarmMod.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
-            if (player.GetModPlayer<SpinbladePlayer>().remainingSpinblades > 0)
+            if (player.ownedProjectileCounts[Item.shoot] < 3)
             {
                 return true;
             }
@@ -42,7 +42,6 @@ namespace AlarmMod.Items.Weapons
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             SoundEngine.PlaySound(SoundID.Item1, player.position);
-            player.GetModPlayer<SpinbladePlayer>().remainingSpinblades--;
             return true;
         }
 
@@ -53,10 +52,5 @@ namespace AlarmMod.Items.Weapons
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
-    }
-
-    public class SpinbladePlayer : ModPlayer
-    {
-        public int remainingSpinblades = 3;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -6,6 +7,11 @@ namespace AlarmMod.Link.Links
 {
     public class Gilgami : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(3, 4));
+        }
+
         public override void SetDefaults()
         {
             Item.width = 44;

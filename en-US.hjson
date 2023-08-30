@@ -399,6 +399,21 @@ Mods: {
 				DisplayName: Uplinks
 				Tooltip: ""
 			}
+
+			CosmicHood: {
+				DisplayName: Cosmic Hood
+				Tooltip: ""
+			}
+
+			CosmicRobe: {
+				DisplayName: Cosmic Robe
+				Tooltip: ""
+			}
+
+			CreativeAbomination: {
+				DisplayName: Creative Abomination
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -413,6 +428,8 @@ Mods: {
 			TrashProjectile.DisplayName: Trash
 			TeleBolt.DisplayName: Tele Bolt
 			MournicHalberdProjectile.DisplayName: Mournic Halberd Projectile
+			CometProjectile.DisplayName: Comet Projectile
+			SpectralFlame.DisplayName: Spectral Flame
 		}
 
 		Tiles.GrimStatue.MapEntry: Grim Statue

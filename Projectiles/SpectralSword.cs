@@ -29,64 +29,22 @@ namespace AlarmMod.Projectiles
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (Main.myPlayer == Projectile.owner && target.active && target.life > 0)
+            if (Main.myPlayer == Projectile.owner)
             {
-                Vector2 newPos = new(0, 0);
-                Vector2 newVel = new(0, 0);
+                Vector2 position = target.Center + new Vector2(10 * 16, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat() * 360));
+                Vector2 velocity = Vector2.Normalize(position.DirectionTo(target.Center)) * Projectile.velocity;
 
-                switch (Main.rand.Next(8))
+                int index = -1;
+                for (int i = 0; i < Main.npc.Length; i++)
                 {
-                    case 0:
-                        newPos.Y = target.Size.Y + 100f;
-
-                        newVel.Y = -14f;
+                    if (Main.npc[i] == target)
+                    {
+                        index = i;
                         break;
-                    case 1:
-                        newPos.X = target.Size.X + 100f;
-                        newPos.Y = target.Size.Y + 100f;
-
-                        newVel.X = -14f;
-                        newVel.Y = -14f;
-                        break;
-                    case 2:
-                        newPos.X = target.Size.X + 100f;
-
-                        newVel.X = -14f;
-                        break;
-                    case 3:
-                        newPos.X = target.Size.X + 100f;
-                        newPos.Y = -target.Size.Y - 100f;
-
-                        newVel.X = -14f;
-                        newVel.Y = 14f;
-                        break;
-                    case 4:
-                        newPos.Y = -target.Size.Y - 100f;
-
-                        newVel.Y = 14f;
-                        break;
-                    case 5:
-                        newPos.X = -target.Size.X - 100f;
-                        newPos.Y = -target.Size.Y - 100f;
-
-                        newVel.X = 14f;
-                        newVel.Y = 14f;
-                        break;
-                    case 6:
-                        newPos.X = -target.Size.X - 100f;
-
-                        newVel.X = 14f;
-                        break;
-                    case 7:
-                        newPos.X = -target.Size.X - 100f;
-                        newPos.Y = target.Size.Y + 100f;
-
-                        newVel.X = 14f;
-                        newVel.Y = -14f;
-                        break;
+                    }
                 }
 
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.position + newPos, newVel * 1.5f, ModContent.ProjectileType<SpectralEcho>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), position, velocity, ModContent.ProjectileType<SpectralEcho>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, index);
                 
             }
             Projectile.Kill();
@@ -115,9 +73,20 @@ namespace AlarmMod.Projectiles
             Projectile.timeLeft = 80;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void AI()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
+            if (Projectile.ai[0] != -1)
+            {
+                if (!Main.npc[(int)Projectile.ai[0]].active || Main.npc[(int)Projectile.ai[0]].life <= 0)
+                {
+                    Projectile.ai[0] = -1;
+                }
+                else
+                {
+                    Projectile.velocity = Vector2.Normalize(Projectile.Center.DirectionTo(Main.npc[(int)Projectile.ai[0]].Center)) * 256;
+                    Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
+                }
+            }
         }
 
         public override void Kill(int timeLeft)

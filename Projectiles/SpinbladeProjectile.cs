@@ -50,10 +50,5 @@ namespace AlarmMod.Projectiles
                 }
             }
         }
-
-        public override void Kill(int timeLeft)
-        {
-            Main.player[Projectile.owner].GetModPlayer<SpinbladePlayer>().remainingSpinblades++;
-        }
     }
 }
