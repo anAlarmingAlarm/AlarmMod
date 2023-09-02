@@ -18,7 +18,6 @@ namespace AlarmMod.Link.Links
             Item.UseSound = SoundID.Item29;
             Item.useTime = 38;
             Item.useAnimation = 38;
-            Item.knockBack = 6;
         }
 
         public override void HoldItem(Player player)
@@ -34,6 +33,7 @@ namespace AlarmMod.Link.Links
                 {
                     lp.afflictedLinks--;
                 }
+
                 lp.DrawLink(DustID.CorruptPlants);
             }
         }

@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,8 +26,9 @@ namespace AlarmMod.Link.Links
         {
             if (player.TryGetModPlayer(out LinkPlayer lp))
             {
-                lp.linkRange = 10;
-                lp.linkRegen += 1;
+                lp.spectralChains = true;
+
+                lp.DrawLink(180); // Dungeon Spirit
             }
         }
 
@@ -38,14 +40,19 @@ namespace AlarmMod.Link.Links
             }
             return false;
         }
+    }
 
-        public override void AddRecipes()
+    public class SpectralChainsDrop : GlobalNPC
+    {
+        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-            CreateRecipe()
-                .AddRecipeGroup("Wood", 8)
-                .AddIngredient(ItemID.FallenStar, 3)
-                .AddTile(TileID.DemonAltar)
-                .Register();
+            // ~0.667% chance to drop from all Angry Bones variants and Cursed Skull, ~1.333% chance to drop from Dark Casters
+            if (npc.type == NPCID.AngryBones || npc.type == NPCID.AngryBonesBig || npc.type == NPCID.AngryBonesBigHelmet || npc.type == NPCID.AngryBonesBigMuscle ||
+                npc.type == NPCID.ShortBones || npc.type == NPCID.BigBoned      || npc.type == NPCID.CursedSkull)
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SpectralChains>(), 150));
+            else if (npc.type == NPCID.DarkCaster)
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SpectralChains>(), 75));
+
         }
     }
 }

@@ -10,23 +10,23 @@ namespace AlarmMod.Link.Links
         {
             Item.width = 44;
             Item.height = 44;
-            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useStyle = ItemUseStyleID.HoldUp;
             Item.autoReuse = true;
             Item.useTurn = true;
-            Item.value = Item.sellPrice(silver: 50);
-            Item.rare = ItemRarityID.Blue;
-            Item.UseSound = SoundID.Item1;
+            Item.value = Item.sellPrice(silver: 75);
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = SoundID.Item29;
             Item.useTime = 38;
             Item.useAnimation = 38;
-            Item.knockBack = 6;
         }
 
         public override void HoldItem(Player player)
         {
             if (player.TryGetModPlayer(out LinkPlayer lp))
             {
-                lp.linkRange = 10;
-                lp.linkDefense = 4;
+                lp.ignisBonds = true;
+
+                lp.DrawLink(Main.rand.NextBool() ? DustID.Torch : DustID.SolarFlare);
             }
         }
 
@@ -42,9 +42,8 @@ namespace AlarmMod.Link.Links
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup("Wood", 8)
-                .AddIngredient(ItemID.FallenStar, 3)
-                .AddTile(TileID.DemonAltar)
+                .AddIngredient(ItemID.HellstoneBar, 15)
+                .AddTile(TileID.Anvils)
                 .Register();
         }
     }

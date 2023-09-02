@@ -31,7 +31,7 @@ namespace AlarmMod.Projectiles
         {
             if (Main.myPlayer == Projectile.owner)
             {
-                Vector2 position = target.Center + new Vector2(10 * 16, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat() * 360));
+                Vector2 position = target.Center + new Vector2(16 * 16 + target.Hitbox.Width / 2, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat() * 360f));
                 Vector2 velocity = Vector2.Normalize(position.DirectionTo(target.Center)) * Projectile.velocity;
 
                 int index = -1;
@@ -80,6 +80,8 @@ namespace AlarmMod.Projectiles
                 if (!Main.npc[(int)Projectile.ai[0]].active || Main.npc[(int)Projectile.ai[0]].life <= 0)
                 {
                     Projectile.ai[0] = -1;
+                    Projectile.velocity = new Vector2(256, 0).RotatedBy(Projectile.rotation);
+                    Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(45);
                 }
                 else
                 {

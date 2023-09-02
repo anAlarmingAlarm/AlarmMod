@@ -27,6 +27,7 @@ namespace AlarmMod.Link.Links
             {
                 lp.linkRange = 12;
                 lp.goredLinks = true;
+
                 lp.DrawLink(DustID.CrimsonPlants);
             }
         }

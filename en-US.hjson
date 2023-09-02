@@ -33,11 +33,21 @@ Mods: {
 
 			Link: {
 				DisplayName: Link
+				Tooltip:
+					'''
+					Another player has linked themselves to you
+					Cancel this buff to cancel the link
+					'''
 				Description: Mods.AlarmMod.Buffs.Link.Description
 			}
 
 			Linknt: {
 				DisplayName: Linknt
+				Tooltip:
+					'''
+					You are currently blocking incoming links
+					Cancel this buff to reallow links
+					'''
 				Description: Mods.AlarmMod.Buffs.Linknt.Description
 			}
 		}
@@ -410,8 +420,18 @@ Mods: {
 				Tooltip: ""
 			}
 
-			CreativeAbomination: {
-				DisplayName: Creative Abomination
+			SpiritualGarb: {
+				Tooltip: ""
+				DisplayName: Spiritual Garb
+			}
+
+			SpiritualJingasa: {
+				DisplayName: Spiritual Jingasa
+				Tooltip: ""
+			}
+
+			SpiritualZori: {
+				DisplayName: Spiritual Zori
 				Tooltip: ""
 			}
 		}
@@ -427,12 +447,9 @@ Mods: {
 			SpinbladeProjectile.DisplayName: Spinblade
 			TrashProjectile.DisplayName: Trash
 			TeleBolt.DisplayName: Tele Bolt
-			MournicHalberdProjectile.DisplayName: Mournic Halberd Projectile
 			CometProjectile.DisplayName: Comet Projectile
 			SpectralFlame.DisplayName: Spectral Flame
 		}
-
-		Tiles.GrimStatue.MapEntry: Grim Statue
 
 		Keybinds: {
 			Dodge.DisplayName: Dodge
@@ -442,5 +459,7 @@ Mods: {
 			"Locker Menu Debug.DisplayName": Locker  Menu  Debug
 			"Toggle AFK Mode.DisplayName": Toggle  A F K  Mode
 		}
+
+		Tiles.GrimStatue.MapEntry: Grim Statue
 	}
 }

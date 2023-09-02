@@ -2,8 +2,10 @@
 using AlarmMod.Projectiles;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 
@@ -18,6 +20,9 @@ namespace AlarmMod.Link
 
         ///<summary> The range of this player's link, in tiles; -69 if not holding a Link item </summary>
         public float linkRange;
+
+        ///<summary> Players who are linked to this player </summary>
+        public List<Player> linkers;
 
 
 
@@ -65,6 +70,9 @@ namespace AlarmMod.Link
 
         ///<summary> Spectral Chains effect (summon flames when no enemies nearby, target nearby enemies, disable if spiritualEffect) </summary>
         public bool spectralChains;
+
+        ///<summary> Ignis Bonds effect (linker and linked players' hits inflict hellfire) </summary>
+        public bool ignisBonds;
 
         ///<summary> 1 for Hallowed Links effect (bonus link damage and Paladin's Shield effect while you have high hp),
         ///2 for Refractive Links effect (stronger version of previous), 0 for neither effect </summary>
@@ -130,6 +138,9 @@ namespace AlarmMod.Link
                             {
                                 Player.GetArmorPenetration(DamageClass.Generic) += 10;
                             }
+
+                            // Add the linker to the list
+                            linkers.Add(p);
                         }
                     }
                 }
@@ -148,7 +159,7 @@ namespace AlarmMod.Link
             }
 
             // Cosmic Set
-            if (cosmicSet && Player.ownedProjectileCounts[ModContent.ProjectileType<CometProjectile>()] < 2 && Main.myPlayer == Player.whoAmI)
+            if (target != null && cosmicSet && Player.ownedProjectileCounts[ModContent.ProjectileType<CometProjectile>()] < 2 && Main.myPlayer == Player.whoAmI)
             {
                 Projectile.NewProjectile(Player.GetSource_FromThis("SetBonus_CosmicSet"), Player.Center, Vector2.Zero, ModContent.ProjectileType<CometProjectile>(), 12, 0, Main.myPlayer);
             }
@@ -156,15 +167,13 @@ namespace AlarmMod.Link
 
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            foreach (Player p in Main.player)
+            foreach (Player p in linkers)
             {
                 if (p.TryGetModPlayer(out LinkPlayer lp))
                 {
                     // Duplicate attacks if this player is the link target of a player using Fractures
-                    if (lp.target == Player && lp.fractures)
-                    {
+                    if (lp.fractures)
                         base.Shoot(item, new EntitySource_ItemUse_WithAmmo(p, item, source.AmmoItemIdUsed), p.position, velocity, type, damage, knockback);
-                    }
                 }
             }
             return base.Shoot(item, source, position, velocity, type, damage, knockback);
@@ -180,11 +189,11 @@ namespace AlarmMod.Link
             }
             else
             {
-                foreach (Player p in Main.player)
+                foreach (Player p in linkers)
                 {
                     if (p.TryGetModPlayer(out LinkPlayer lp))
                     {
-                        if (lp.target == Player && lp.afflictedLinks == 0)
+                        if (lp.afflictedLinks == 0)
                         {
                             modifiers.IncomingDamageMultiplier *= 0.85f;
                             lp.afflictedLinks = 180;
@@ -204,39 +213,49 @@ namespace AlarmMod.Link
             base.ModifyHitByProjectile(proj, ref modifiers);
         }
 
-        // Gored Links effects
+        // Gored Links and Ignis Bonds effects
         public override void OnHitAnything(float x, float y, Entity victim)
         {
+            bool ignis = ignisBonds;
+
             if (goredLinks)
             {
                 goredLinksHits[2] = goredLinksHits[1];
                 goredLinksHits[1] = goredLinksHits[0];
                 goredLinksHits[0] = 0;
             }
-            else
+            foreach (Player p in linkers)
             {
-                foreach (Player p in Main.player)
+                if (p.TryGetModPlayer(out LinkPlayer lp))
                 {
-                    if (p.TryGetModPlayer(out LinkPlayer lp))
+                    if (lp.goredLinks)
                     {
-                        if (lp.target == Player && lp.goredLinks)
-                        {
-                            lp.goredLinksHits[2] = lp.goredLinksHits[1];
-                            lp.goredLinksHits[1] = lp.goredLinksHits[0];
-                            lp.goredLinksHits[0] = 0;
-                        }
+                        lp.goredLinksHits[2] = lp.goredLinksHits[1];
+                        lp.goredLinksHits[1] = lp.goredLinksHits[0];
+                        lp.goredLinksHits[0] = 0;
                     }
+                    if (lp.ignisBonds)
+                        ignis = true;
                 }
             }
+
+            if (ignis)
+            {
+                if (victim.GetType() == typeof(NPC))
+                    ((NPC)victim).AddBuff(BuffID.OnFire3, 180);
+                else if (victim.GetType() == typeof(Player))
+                    ((Player)victim).AddBuff(BuffID.OnFire3, 180);
+            }
+
             base.OnHitAnything(x, y, victim);
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            foreach (Player p in Main.player)
+            foreach (Player p in linkers)
             {
                 if (p.TryGetModPlayer(out LinkPlayer lp))
                 {
-                    if (lp.target == Player && lp.goredLinks && lp.goredLinksHits[2] - 60 <= lp.goredLinksHits[0] && lp.goredLinksHits[0] <= 60)
+                    if (lp.goredLinks && lp.goredLinksHits[2] - 60 <= lp.goredLinksHits[0] && lp.goredLinksHits[0] <= 60)
                     {
                         modifiers.FlatBonusDamage += 3;
                     }
@@ -247,6 +266,7 @@ namespace AlarmMod.Link
 
         public override void ResetEffects()
         {
+            linkers.Clear();
             linkRange = -69;
             linkDamage = 0;
             linkCrit = 0;
@@ -270,6 +290,7 @@ namespace AlarmMod.Link
             goredLinks = false;
             cufflinks = false;
             spectralChains = false;
+            ignisBonds = false;
             saviorEffect = 0;
             elegyEmblem = false;
             clockworkBrace = false;
@@ -307,7 +328,7 @@ namespace AlarmMod.Link
         }
 
         ///<summary> Draw dust for the link range and the link, if active </summary>
-        public void DrawLink(int dust, Color color = default) //
+        public void DrawLink(int dust, Color color = default)
         {
             if (linkRange > 0) // This should never be false, but just in case
             {

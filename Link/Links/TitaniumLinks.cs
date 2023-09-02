@@ -27,6 +27,8 @@ namespace AlarmMod.Link.Links
             {
                 lp.linkRange = 10;
                 lp.linkRegen += 1;
+
+                lp.DrawLink(Main.rand.NextBool() ? DustID.Titanium : 180); // Dungeon Spirit
             }
         }
 

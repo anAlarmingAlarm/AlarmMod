@@ -27,6 +27,7 @@ namespace AlarmMod.Link.Links
             {
                 lp.linkRange = 14;
                 lp.cufflinks = true;
+
                 lp.DrawLink(19); // Gold Coin projectile
             }
         }

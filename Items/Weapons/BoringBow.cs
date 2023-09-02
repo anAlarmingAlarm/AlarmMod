@@ -1,4 +1,5 @@
 ﻿using AlarmMod.Items.Accessories;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -23,13 +24,18 @@ namespace AlarmMod.Items.Weapons
             entity.rare = ItemRarityID.Green;
             entity.SetNameOverride("Boring Bow");
         }
+
+        public override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            velocity *= 1.5f;
+        }
     }
 
     public class BoringBowDrop : GlobalNPC
     {
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-            // Any tier of Etherian Goblin, Goblin Bomber, Javelin Thrower, or Wyvern
+            // 0.5% chance to drop from any tier of Etherian Goblin, Goblin Bomber, Javelin Thrower, or Wyvern
             if (npc.type >= NPCID.DD2GoblinT1 && npc.type <= NPCID.DD2JavelinstT3)
             {
                 npcLoot.Add(ItemDropRule.Common(ItemID.BoringBow, 200));

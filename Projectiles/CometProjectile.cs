@@ -10,7 +10,7 @@ namespace AlarmMod.Projectiles
 {
     public class CometProjectile : ModProjectile
     {
-        private const float distance = 80f;
+        private const float distance = 90f;
         private const int speed = 6;
         private Player owner;
 
@@ -37,12 +37,12 @@ namespace AlarmMod.Projectiles
             try
             {
                 owner = Main.player[Projectile.owner];
-                if (owner.ownedProjectileCounts[Projectile.type] > 2)
+                if (owner.ownedProjectileCounts[Projectile.type] > 1)
                 {
                     // Something is wrong, despawn this immediately
                     Projectile.Kill();
                 }
-                else if (owner.ownedProjectileCounts[Projectile.type] == 2)
+                else if (owner.ownedProjectileCounts[Projectile.type] == 1)
                 {
                     // This is the second comet, so go below the player instead
                     Projectile.ai[0] = 180;
@@ -71,7 +71,7 @@ namespace AlarmMod.Projectiles
             }
 
             // Orbit the player
-            Projectile.Center = owner.Center + new Vector2(distance, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0])); // offset this by some amount to fix weird X axis offset
+            Projectile.Center = owner.Center + new Vector2(distance, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0])) + new Vector2(-6, 0); // offset this by some amount to fix weird X axis offset
             Projectile.ai[0] += speed;
             if (Projectile.ai[0] >= 360)
                 Projectile.ai[0] -= 360;
@@ -79,10 +79,10 @@ namespace AlarmMod.Projectiles
             Projectile.rotation = Projectile.Center.DirectionTo(owner.Center).ToRotation() + MathHelper.ToRadians(180);
 
             // Animate projectile
-            if (++Projectile.frameCounter > 20)
+            if (++Projectile.frameCounter > 30)
                 Projectile.frameCounter = 0;
-            if (Projectile.frameCounter % 4 == 0)
-                Projectile.frame = Projectile.frameCounter / 4;
+            if (Projectile.frameCounter % 6 == 0)
+                Projectile.frame = Projectile.frameCounter / 6;
         }
     }
 }
