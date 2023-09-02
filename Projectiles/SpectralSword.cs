@@ -31,7 +31,7 @@ namespace AlarmMod.Projectiles
         {
             if (Main.myPlayer == Projectile.owner)
             {
-                Vector2 position = target.Center + new Vector2(16 * 16 + target.Hitbox.Width / 2, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat() * 360f));
+                Vector2 position = target.Center + new Vector2(16 * 16 + target.Hitbox.Width * 0.75f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat() * 360f));
                 Vector2 velocity = Vector2.Normalize(position.DirectionTo(target.Center)) * Projectile.velocity;
 
                 int index = -1;
