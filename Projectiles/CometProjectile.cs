@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿/* Commented until Link is fully implemented
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -85,4 +86,4 @@ namespace AlarmMod.Projectiles
                 Projectile.frame = Projectile.frameCounter / 6;
         }
     }
-}
+}*/

@@ -1,4 +1,5 @@
-﻿using AlarmMod.Link;
+﻿/* Commented until Link is fully implemented
+using AlarmMod.Link;
 using AlarmMod.Link.Links;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
@@ -89,7 +90,7 @@ namespace AlarmMod.Projectiles
 
     public class SpectralFlamePlayer : ModPlayer
     {
-        public List<Projectile> flames = new();
+        public List<Projectile> flames = new(8);
         public int timer;
 
         public int SpawnFlame(Projectile proj)
@@ -184,13 +185,17 @@ namespace AlarmMod.Projectiles
 
         private void ClearFlames()
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < flames.Capacity; i++)
             {
-                if (flames[i].GetType() == typeof(SpectralFlame))
-                    flames[i].Kill(); // Kill() will clear the corresponding array slot, so we don't have to do it here
-                else
-                    flames[i] = null;
+                try
+                {
+                    if (flames[i].GetType() == typeof(SpectralFlame))
+                        flames[i].Kill(); // Kill() will clear the corresponding array slot, so we don't have to do it here
+                } catch { }
             }
+
+            // In case the above missed a non-null non-projectile value
+            flames.Clear();
         }
 
         public override void OnEnterWorld()
@@ -203,4 +208,4 @@ namespace AlarmMod.Projectiles
             ClearFlames();
         }
     }
-}
+}*/

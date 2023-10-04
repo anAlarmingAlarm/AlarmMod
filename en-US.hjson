@@ -434,6 +434,31 @@ Mods: {
 				DisplayName: Spiritual Zori
 				Tooltip: ""
 			}
+
+			Dildo: {
+				DisplayName: Dildo
+				Tooltip: "'This seems like a bad idea'"
+			}
+
+			Glider: {
+				DisplayName: Glider
+				Tooltip: "'Allows slow fall'"
+			}
+
+			PersonalShieldGenerator: {
+				DisplayName: Personal Shield Generator
+				Tooltip: ""
+			}
+
+			BidenBlast: {
+				DisplayName: Biden Blast
+				Tooltip: ""
+			}
+
+			SwitchTest: {
+				DisplayName: Switch Test
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -449,6 +474,9 @@ Mods: {
 			TeleBolt.DisplayName: Tele Bolt
 			CometProjectile.DisplayName: Comet Projectile
 			SpectralFlame.DisplayName: Spectral Flame
+			BidenBlastProj.DisplayName: Biden Blast Proj
+			BidenBlastProjLarge.DisplayName: Biden Blast Proj Large
+			SwitchTestProjectile.DisplayName: Switch Test Projectile
 		}
 
 		Keybinds: {
@@ -458,6 +486,7 @@ Mods: {
 			"Toggle Defender's Forge Autobuff.DisplayName": Toggle  Defender's  Forge  Autobuff
 			"Locker Menu Debug.DisplayName": Locker  Menu  Debug
 			"Toggle AFK Mode.DisplayName": Toggle  A F K  Mode
+			UFO.DisplayName: U F O
 		}
 
 		Tiles.GrimStatue.MapEntry: Grim Statue

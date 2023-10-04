@@ -19,6 +19,8 @@
     <None Remove="Buffs\Link.png" />
     <None Remove="Buffs\Linknt.png" />
     <None Remove="CreativeAbomination.png" />
+    <None Remove="Items\Accessories\PersonalShieldGenerator.png" />
+    <None Remove="Items\Weapons\SwitchTest.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />

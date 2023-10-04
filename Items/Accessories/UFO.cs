@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using AlarmMod.Buffs;
+using System.Linq;
 using Terraria;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -19,8 +21,7 @@ namespace AlarmMod.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.noFallDmg = true;
-            player.hasJumpOption_Cloud = true;
-            player.canJumpAgain_Cloud = true;
+            player.GetModPlayer<UFOPlayer>().ufo = true;
         }
 
         public override void AddRecipes()
@@ -38,6 +39,38 @@ namespace AlarmMod.Items.Accessories
                 .AddTile(TileID.MythrilAnvil)
                 .SortBefore(Main.recipe.First(recipe => recipe.createItem.wingSlot != -1)) // see above
                 .Register();
+        }
+    }
+
+    public class UFOPlayer : ModPlayer
+    {
+        public bool ufo;
+
+        public override void ProcessTriggers(TriggersSet triggersSet)
+        {
+            if (ufo && !Player.AnyExtraJumpUsable() && UFOKeySystem.UFOKeybind.JustPressed)
+            {
+                Player.velocity.Y = -8;
+            }
+        }
+
+        public override void ResetEffects()
+        {
+            ufo = false;
+        }
+    }
+    public class UFOKeySystem : ModSystem
+    {
+        public static ModKeybind UFOKeybind { get; private set; }
+
+        public override void Load()
+        {
+            UFOKeybind = KeybindLoader.RegisterKeybind(Mod, "UFO", "Space");
+        }
+
+        public override void Unload()
+        {
+            UFOKeybind = null; // not technically required but good practice
         }
     }
 }
