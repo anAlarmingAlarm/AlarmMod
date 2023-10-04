@@ -9,24 +9,24 @@ namespace AlarmMod.Systems
     public class Keybinds : ModSystem
     {
         public static ModKeybind AmmoSwitchKeybind { get; private set; }
-        public static ModKeybind DefenderBuffToggle { get; private set; }
+        //public static ModKeybind DefenderBuffToggle { get; private set; }
 
         public override void Load()
         {
             AmmoSwitchKeybind = KeybindLoader.RegisterKeybind(Mod, "Cycle Ammo Slots", "K");
-            DefenderBuffToggle = KeybindLoader.RegisterKeybind(Mod, "Toggle Defender's Forge Autobuff", ";");
+            //DefenderBuffToggle = KeybindLoader.RegisterKeybind(Mod, "Toggle Defender's Forge Autobuff", ";");
         }
 
         public override void Unload()
         {
             AmmoSwitchKeybind = null;
-            DefenderBuffToggle = null;
+            //DefenderBuffToggle = null;
         }
     }
 
     public class KeybindPlayer : ModPlayer
     {
-        bool toggleDefender = false;
+        //bool toggleDefender = false;
 
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
@@ -120,18 +120,18 @@ namespace AlarmMod.Systems
                     }
                 }
             }
-            if (Keybinds.DefenderBuffToggle.JustPressed)
+            /*if (Keybinds.DefenderBuffToggle.JustPressed)
             {
                 if (toggleDefender)
                     toggleDefender = false;
                 else
                     toggleDefender = true;
-            }
+            }*/
         }
 
         public override void PreUpdateBuffs()
         {
-            if (toggleDefender)
+            /*if (toggleDefender)
             {
                 Item curItem;
                 for (int i = 0; i < 10; i++) //only check first 10 slots of Defender's Forge for "balance" and to prevent the accursed buff cap glitches
@@ -202,12 +202,12 @@ namespace AlarmMod.Systems
                         Player.AddBuff(BuffID.Honey, 2);
                     }
                 }
-            }
+            }*/
         }
     }
 
     //Change this item's tooltip to hopefully make the change less obscure
-    public class DefenderForge : GlobalItem
+    /*public class DefenderForge : GlobalItem
     {
         public override bool AppliesToEntity(Item item, bool lateInstatiation)
         {
@@ -224,5 +224,5 @@ namespace AlarmMod.Systems
             tooltips.Find(line => line.Name == "Tooltip1").Text += "\nBuff potions and furniture in the first row are used automatically from anywhere" +
                 "\nThis can be toggled with a keybind (toggled off by default)\nFurniture and full stacks of buff potions grant buffs but are not consumed";
         }
-    }
+    }*/
 }

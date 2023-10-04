@@ -447,7 +447,13 @@ Mods: {
 
 			PersonalShieldGenerator: {
 				DisplayName: Personal Shield Generator
-				Tooltip: ""
+				Tooltip:
+					'''
+					Gain a shield equal to 8% of your maximum health
+					The shield will take damage for you until it is broken
+					Regenerates after 7 seconds of not taking damage
+					'Trendy, apparently'
+					'''
 			}
 
 			BidenBlast: {
@@ -482,11 +488,9 @@ Mods: {
 		Keybinds: {
 			Dodge.DisplayName: Dodge
 			Barrier.DisplayName: Barrier
-			"Cycle Ammo Slots.DisplayName": Cycle  Ammo  Slots
-			"Toggle Defender's Forge Autobuff.DisplayName": Toggle  Defender's  Forge  Autobuff
-			"Locker Menu Debug.DisplayName": Locker  Menu  Debug
-			"Toggle AFK Mode.DisplayName": Toggle  A F K  Mode
-			UFO.DisplayName: U F O
+			"Cycle Ammo Slots.DisplayName": Cycle Ammo Slots
+			"Toggle AFK Mode.DisplayName": Toggle AFK Mode
+			UFO.DisplayName: UFO
 		}
 
 		Tiles.GrimStatue.MapEntry: Grim Statue
