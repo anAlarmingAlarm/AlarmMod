@@ -1,5 +1,4 @@
-﻿/* commented until i actually fix this
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -7,7 +6,7 @@ using System;
 
 namespace AlarmMod.Items.Weapons
 {
-    public class StarlitStrikers : ModItem
+    public class JetThruster : ModItem
     {
         public override void SetDefaults()
         {
@@ -50,14 +49,18 @@ namespace AlarmMod.Items.Weapons
             return false;
         }
 
-        public override void AddRecipes()
+        /*public override void MeleeEffects(Player player, Rectangle hitbox)
         {
-            CreateRecipe()
-                .AddIngredient(ItemID.MeteoriteBar, 16)
-                .AddIngredient(ItemID.FallenStar, 50)
-                .AddTile(TileID.Anvils)
-                .Register();
-        }
+            int randNum = Main.rand.Next(3);
+            int dust = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, randNum switch
+            {
+                0 => 15,dd
+                1 => 57,
+                _ => 58,
+            }, player.direction * 2, 0f, 150, default, 1.3f);
+            Main.dust[dust].velocity *= 0.2f;
+
+            base.MeleeEffects(player, hitbox);
+        }*/
     }
 }
-*/

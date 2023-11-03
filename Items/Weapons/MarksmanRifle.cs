@@ -11,11 +11,11 @@ namespace AlarmMod.Items.Weapons
         {
             Item.CloneDefaults(ItemID.Musket);
 
-            Item.damage = 27;
+            Item.damage = 28;
             Item.useTime = 24;
             Item.useAnimation = 24;
             Item.knockBack = 4;
-            Item.value = Item.sellPrice(gold: 3);
+            Item.value = Item.sellPrice(gold: 2);
         }
 
         public override Vector2? HoldoutOffset()
@@ -28,8 +28,13 @@ namespace AlarmMod.Items.Weapons
             CreateRecipe()
                 .AddIngredient(ItemID.Musket)
                 .AddIngredient(ItemID.IllegalGunParts)
-                .AddTile(TileID.Furnaces)
+                .AddTile(TileID.Anvils)
                 .Register();
         }
+
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			if (type == ProjectileID.Bullet)
+				type = ProjectileID.BulletHighVelocity;
+		}
     }
 }

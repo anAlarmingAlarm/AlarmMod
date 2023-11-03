@@ -21,14 +21,13 @@ namespace AlarmMod.Projectiles
         public override void OnSpawn(IEntitySource source)
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
+            
         }
 
         public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 40; i++)
-            {
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.ManaRegeneration, Projectile.velocity.X * 0.05f, Projectile.velocity.Y * 0.05f, 150, default, 1.2f);
-            }
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AlarmMod.Systems;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
@@ -29,34 +30,16 @@ namespace AlarmMod.Items.Weapons
         {
             if (target.boss)
             {
-                Main.NewText(target.FullName + " has been excluded from reality.", Color.Purple);
-                target.active = false;
+                AlarmMessage.QueueMessage(target.FullName + " has been excluded from reality.", Color.Purple);
+                
             }
-            else
-            {
-                target.Teleport(new Vector2(0, 0));
-            }
+            target.active = false;
         }
 
         public override void OnHitPvp(Player player, Player target, Player.HurtInfo hurtInfo)
         {
-            Main.NewText(target.name + " has been excluded from reality.", Color.Red);
+            AlarmMessage.QueueMessage(target.name + " has been excluded from reality.", Color.Red);
             target.active = false;
         }
     }
-
-    /*public class BonkPlayer : ModPlayer
-    {
-        public void CeaseExistence()
-        {
-            for (int i = 0; i < Main.player.Length; i++)
-            {
-                if (Main.player[i] == Player)
-                {
-                    Main.NewText(Player.name + " has been excluded from reality.", Color.Yellow);
-                    Main.player[i] = null;
-                }
-            }
-        }
-    }*/
 }

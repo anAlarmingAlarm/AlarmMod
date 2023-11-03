@@ -10,7 +10,6 @@ namespace AlarmMod.Projectiles
     {
         public override void SetDefaults()
         {
-
             Projectile.width = 24;
             Projectile.height = 24;
             Projectile.friendly = true;
@@ -61,7 +60,6 @@ namespace AlarmMod.Projectiles
 
         public override void SetDefaults()
         {
-
             Projectile.width = 16;
             Projectile.height = 16;
             Projectile.friendly = true;

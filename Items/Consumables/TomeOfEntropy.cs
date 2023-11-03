@@ -1,6 +1,8 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
+using AlarmMod.Systems;
 
 namespace AlarmMod.Items.Consumables
 {
@@ -23,6 +25,7 @@ namespace AlarmMod.Items.Consumables
             }
 
             Main.hardMode = true;
+            AlarmMessage.QueueMessage("The ancient spirits of light and dark have been released by " + player.name + ".", new Color(175, 75, 255));
 
             return true;
         }

@@ -20,7 +20,24 @@
     <None Remove="Buffs\Linknt.png" />
     <None Remove="CreativeAbomination.png" />
     <None Remove="Items\Accessories\PersonalShieldGenerator.png" />
+    <None Remove="Items\Clentigun.png" />
+    <None Remove="Items\Placeables\Pylons\CorruptPylonItem.png" />
+    <None Remove="Items\Placeables\Pylons\CrimsonPylonItem.png" />
+    <None Remove="Items\Weapons\GunwhipPrime.png" />
+    <None Remove="Items\Weapons\JetThruster.png" />
+    <None Remove="Items\Weapons\SwitchAxe.png" />
     <None Remove="Items\Weapons\SwitchTest.png" />
+    <None Remove="Projectiles\GunwhipPrimeProjectile.png" />
+    <None Remove="Projectiles\SwitchAxeProjectile1.png" />
+    <None Remove="Projectiles\SwitchAxeProjectile2.png" />
+    <None Remove="Tiles\Pylons\CorruptPylon.png" />
+    <None Remove="Tiles\Pylons\CorruptPylon_Crystal.png" />
+    <None Remove="Tiles\Pylons\CorruptPylon_CrystalHighlight.png" />
+    <None Remove="Tiles\Pylons\CorruptPylon_MapIcon.png" />
+    <None Remove="Tiles\Pylons\CrimsonPylon.png" />
+    <None Remove="Tiles\Pylons\CrimsonPylon_Crystal.png" />
+    <None Remove="Tiles\Pylons\CrimsonPylon_CrystalHighlight.png" />
+    <None Remove="Tiles\Pylons\CrimsonPylon_MapIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />

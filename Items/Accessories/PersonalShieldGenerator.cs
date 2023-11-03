@@ -26,6 +26,7 @@ namespace AlarmMod.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<PSGPlayer>().equipped = true;
+            player.GetModPlayer<PSGPlayer>().hide = hideVisual;
         }
 
         public override void AddRecipes()
@@ -41,6 +42,7 @@ namespace AlarmMod.Items.Accessories
     public class PSGPlayer : ModPlayer
     {
         public bool equipped;
+        public bool hide;
         float shield = 0;
         int timeSinceDamage = 0;
         int overheal;
@@ -59,6 +61,7 @@ namespace AlarmMod.Items.Accessories
             }
 
             equipped = false;
+            hide = false;
         }
 
         public override void PreUpdate()
@@ -109,7 +112,6 @@ namespace AlarmMod.Items.Accessories
             {
                 foreach (CombatText text in Main.combatText)
                 {
-                    if (text.active) Main.NewText(text.text + " / " + info.Damage.ToString());
                     if (text.text == info.Damage.ToString() && text.active && text.position.Distance(Player.Center) < 160
                         && (text.color == CombatText.DamagedFriendly || text.color == CombatText.DamagedFriendlyCrit))
                     {
@@ -126,10 +128,13 @@ namespace AlarmMod.Items.Accessories
 
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
-            r -= shield / ShieldMax * 0.5f;
-            g -= shield / ShieldMax * 0.4f;
+            if (!hide)
+            {
+                r -= shield / ShieldMax * 0.65f;
+                g -= shield / ShieldMax * 0.75f;
 
-            b += shield / ShieldMax * 0.4f;
+                b += shield / ShieldMax * 0.4f;
+            }
         }
     }
 }

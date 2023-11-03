@@ -1,1 +1,3 @@
 A collection of assorted random ideas coded into existence, with generally more thought being put into if something can be done rather than if it should.
+
+If you're more into sane and reasonably thought-out changes, check out Alarm Tweaks (where I put most of my gameplay tweaks): https://steamcommunity.com/sharedfiles/filedetails/?id=3045600313

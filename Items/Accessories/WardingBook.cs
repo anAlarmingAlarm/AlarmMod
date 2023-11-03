@@ -79,7 +79,7 @@ namespace AlarmMod.Items.Accessories
         }
     }
 
-    // 5% chance to drop from Pre-Hardmode Dungeon enemies
+    // 1% chance to drop from Pre-Hardmode Dungeon enemies
     public class WardingBookDrop : GlobalNPC
     {
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
@@ -92,7 +92,7 @@ namespace AlarmMod.Items.Accessories
                 npc.type == NPCID.CursedSkull ||
                 npc.type == NPCID.DungeonSlime)
             {
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<WardingBook>(), 20));
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<WardingBook>(), 100));
             }
         }
     }

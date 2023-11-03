@@ -33,22 +33,30 @@ Mods: {
 
 			Link: {
 				DisplayName: Link
-				Tooltip:
+				Description:
 					'''
 					Another player has linked themselves to you
 					Cancel this buff to cancel the link
 					'''
-				Description: Mods.AlarmMod.Buffs.Link.Description
 			}
 
 			Linknt: {
-				DisplayName: Linknt
-				Tooltip:
+				DisplayName: Linkn't
+				Description:
 					'''
 					You are currently blocking incoming links
 					Cancel this buff to reallow links
 					'''
-				Description: Mods.AlarmMod.Buffs.Linknt.Description
+			}
+
+			LifesaverBuff: {
+				DisplayName: Lifesaver
+				Description: You cannot die
+			}
+
+			LifesaverCooldown: {
+				DisplayName: Lifesaven't
+				Description: You can die
 			}
 		}
 
@@ -198,7 +206,7 @@ Mods: {
 
 			MarksmanRifle: {
 				DisplayName: Marksman Rifle
-				Tooltip: ""
+				Tooltip: Shoots a powerful, high velocity bullet
 			}
 
 			MasterSword: {
@@ -266,6 +274,7 @@ Mods: {
 				Tooltip:
 					'''
 					Allows infinite air jumps
+					Set the hotkey in your controls to use
 					Negates fall damage
 					'''
 			}
@@ -290,156 +299,6 @@ Mods: {
 				Tooltip: Makes you unable to move or deal damage, and after a delay makes you intangible
 			}
 
-			LivingWoodBreastplate: {
-				DisplayName: Living Wood Breastplate
-				Tooltip: ""
-			}
-
-			LivingWoodCirclet: {
-				DisplayName: Living Wood Circlet
-				Tooltip: ""
-			}
-
-			LivingWoodLeggings: {
-				DisplayName: Living Wood Leggings
-				Tooltip: ""
-			}
-
-			MournicHalberd: {
-				Tooltip: ""
-				DisplayName: Mournic Halberd
-			}
-
-			AdamantiteLinks: {
-				DisplayName: Adamantite Links
-				Tooltip: ""
-			}
-
-			AfflictedLinks: {
-				DisplayName: Afflicted Links
-				Tooltip: ""
-			}
-
-			CobaltLinks: {
-				DisplayName: Cobalt Links
-				Tooltip: ""
-			}
-
-			Cufflinks: {
-				DisplayName: Cufflinks
-				Tooltip: ""
-			}
-
-			EnchantedLinks: {
-				DisplayName: Enchanted Links
-				Tooltip: ""
-			}
-
-			FlayedFlora: {
-				DisplayName: Flayed Flora
-				Tooltip: ""
-			}
-
-			Fractures: {
-				DisplayName: Fractures
-				Tooltip: ""
-			}
-
-			Gilgami: {
-				DisplayName: Gilgami
-				Tooltip: ""
-			}
-
-			GoredLinks: {
-				DisplayName: Gored Links
-				Tooltip: ""
-			}
-
-			HallowedLinks: {
-				DisplayName: Hallowed Links
-				Tooltip: ""
-			}
-
-			IgnisBonds: {
-				DisplayName: Ignis Bonds
-				Tooltip: ""
-			}
-
-			IllOmens: {
-				DisplayName: Ill Omens
-				Tooltip: ""
-			}
-
-			MythrilLinks: {
-				DisplayName: Mythril Links
-				Tooltip: ""
-			}
-
-			OrichalcumLinks: {
-				DisplayName: Orichalcum Links
-				Tooltip: ""
-			}
-
-			PalladiumLinks: {
-				DisplayName: Palladium Links
-				Tooltip: ""
-			}
-
-			PrismaticLinks: {
-				DisplayName: Prismatic Links
-				Tooltip: ""
-			}
-
-			RefractiveLinks: {
-				DisplayName: Refractive Links
-				Tooltip: ""
-			}
-
-			SpectralChains: {
-				DisplayName: Spectral Chains
-				Tooltip: ""
-			}
-
-			TitaniumLinks: {
-				DisplayName: Titanium Links
-				Tooltip: ""
-			}
-
-			Uplinks: {
-				DisplayName: Uplinks
-				Tooltip: ""
-			}
-
-			CosmicHood: {
-				DisplayName: Cosmic Hood
-				Tooltip: ""
-			}
-
-			CosmicRobe: {
-				DisplayName: Cosmic Robe
-				Tooltip: ""
-			}
-
-			SpiritualGarb: {
-				Tooltip: ""
-				DisplayName: Spiritual Garb
-			}
-
-			SpiritualJingasa: {
-				DisplayName: Spiritual Jingasa
-				Tooltip: ""
-			}
-
-			SpiritualZori: {
-				DisplayName: Spiritual Zori
-				Tooltip: ""
-			}
-
-			Dildo: {
-				DisplayName: Dildo
-				Tooltip: "'This seems like a bad idea'"
-			}
-
 			Glider: {
 				DisplayName: Glider
 				Tooltip: "'Allows slow fall'"
@@ -458,12 +317,167 @@ Mods: {
 
 			BidenBlast: {
 				DisplayName: Biden Blast
-				Tooltip: ""
+				Tooltip: "'It's Joever for you'"
 			}
 
 			SwitchTest: {
 				DisplayName: Switch Test
-				Tooltip: ""
+				Tooltip: Right click to switch modes
+			}
+
+			PipeBomb: {
+				DisplayName: Pipe Bomb
+				Tooltip: "'So cool!'"
+			}
+
+			Gunwhip: {
+				DisplayName: Gunwhip
+				Tooltip:
+					'''
+					Your summons will focus struck enemies
+					Fires a burst of bullets
+					Ignores a small amount of enemy defense
+					'I've heard of pistol whipping, but this is ridiculous'
+					'''
+			}
+
+			GunwhipPrime: {
+				DisplayName: Gunwhip Prime
+				Tooltip:
+					'''
+					Your summons will focus struck enemies
+					Fires a burst of high-velocity bullets
+					Ignores a substantial amount of enemy defense
+					'Operator, Ordis wonders, what the hell is wrong with you?'
+					'''
+			}
+
+			JetThruster: {
+				DisplayName: Jet Thruster
+				Tooltip: "'brrrrrrrr'"
+			}
+
+			CorruptPylonItem: {
+				DisplayName: Corrupt Pylon
+				Tooltip:
+					'''
+					Teleport to another pylon
+					You can only place one per type and in the matching biome
+					'''
+			}
+
+			CrimsonPylonItem: {
+				DisplayName: Crimson Pylon
+				Tooltip:
+					'''
+					Teleport to another pylon
+					You can only place one per type and in the matching biome
+					'''
+			}
+
+			Clentigun: {
+				DisplayName: Clentigun
+				Tooltip:
+					'''
+					Creates and destroys biomes when fired
+					Uses colored solution
+					'''
+			}
+
+			AcromaniaSigil: {
+				DisplayName: Acromania Sigil
+				Tooltip:
+					'''
+					Movement speed increases also increase your attack speed
+					Damage increases no longer increase damage, but instead increase movement speed
+					Your damage is halved (this does not affect the above)
+					Only one sigil can be equipped a time
+					'''
+			}
+
+			EmptySigil: {
+				DisplayName: Empty Sigil
+				Tooltip: Used to make Sigils
+			}
+
+			InfusionSigil: {
+				DisplayName: Infusion Sigil
+				Tooltip:
+					'''
+					Your mana is locked to 30
+					All mana increases and decreases now redirect to your health
+					Mana-restoring items cannot be used
+					-50% non-magic damage
+					Only one sigil can be equipped a time
+					'''
+			}
+
+			MagneticSigil: {
+				DisplayName: Magnetic Sigil
+				Tooltip:
+					'''
+					Most projectiles fired by you instead appear at your cursor and move towards you
+					Only one sigil can be equipped a time
+					'''
+			}
+
+			MirrorSigil: {
+				DisplayName: Mirror Sigil
+				Tooltip:
+					'''
+					While in bright areas, you deal 25% more damage after all effects but take 25% more damage
+					While in dark areas, you take 25% less damage but deal 25% less damage after all effects
+					Only one sigil can be equipped a time
+					'''
+			}
+
+			PhaseSigil: {
+				DisplayName: Phase Sigil
+				Tooltip:
+					'''
+					Prevents you from hurting or being hurt by enemies
+					Takes 10 seconds to activate once equipped
+					After unequipping you will be unable to hit enemies for 10 more seconds
+					Only one sigil can be equipped a time
+					'''
+			}
+
+			Pure: {
+				DisplayName: Pure
+				Tooltip:
+					'''
+					Showers meteors
+					'Meteor spam go brrrrrrrr'
+					'''
+			}
+
+			Lifesaver: {
+				DisplayName: Lifesaver
+				Tooltip:
+					'''
+					Will revive you if you die for a short duration
+					'I don't think that's how that works'
+					'''
+			}
+
+			SwitchAxe: {
+				DisplayName: Switch Axe
+				Tooltip: Right click to switch modes
+			}
+
+			TwainsArc: {
+				DisplayName: Twain's Arc
+				Tooltip: Fires a piercing laser
+			}
+
+			Slate: {
+				DisplayName: Slate
+				Tooltip:
+					'''
+					Six round burst
+					Only the first shot consumes ammo
+					Evolves depending the biome it is used in the most
+					'''
 			}
 		}
 
@@ -483,6 +497,13 @@ Mods: {
 			BidenBlastProj.DisplayName: Biden Blast Proj
 			BidenBlastProjLarge.DisplayName: Biden Blast Proj Large
 			SwitchTestProjectile.DisplayName: Switch Test Projectile
+			GunwhipProjectile.DisplayName: Gunwhip Projectile
+			GunwhipPrimeProjectile.DisplayName: Gunwhip Prime Projectile
+			GunwhipBullet.DisplayName: Gunwhip Bullet
+			GunwhipPrimeBullet.DisplayName: Gunwhip Prime Bullet
+			PipeBombProjectile.DisplayName: Pipe Bomb
+			SwitchAxeProjectile.DisplayName: Switch Axe
+			TwainsArcProjectile.DisplayName: Twain's Arc
 		}
 
 		Keybinds: {
@@ -493,6 +514,10 @@ Mods: {
 			UFO.DisplayName: UFO
 		}
 
-		Tiles.GrimStatue.MapEntry: Grim Statue
+		Tiles: {
+			GrimStatue.MapEntry: Grim Statue
+			CorruptPylon.MapEntry: Corrupt Pylon
+			CrimsonPylon.MapEntry: Crimson Pylon
+		}
 	}
 }
